@@ -1,15 +1,21 @@
 const fileInput = document.getElementById("capturedImage");
 
-fileInput.addEventListener("change", (e) => {
-  for (let key in e.target.files[0]) {
-    console.log(e.target[key]);
-  }
-  console.log(e.target.files[0]);
+fileInput.addEventListener("change", function () {
   let container = document.createElement("div");
   document.body.appendChild(container);
   let imgContainer = document.createElement("img");
   container.appendChild(imgContainer);
-  imgContainer.src = e.target.files;
   imgContainer.style.width = "500px";
   imgContainer.style.height = "500px";
+  console.log(this.files[0]);
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    console.log(reader);
+
+    reader.addEventListener("load", () => {
+      imgContainer.setAttribute("src", reader.result);
+    });
+    reader.readAsDataURL(file);
+  }
 });
